@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Blog</title>
 </head>
+
 <body>
+    {% if user.is_authenticated %}
+    <p>Hola, {{ user.username }} | <a href="{% url 'logout' %}">Cerrar sesión</a></p>
+    {% else %}
+    <p><a href="{% url 'login' %}">Iniciar sesión</a></p>
+    {% endif %}
+    
     <h1>Lista de Posts</h1>
     {% for post in posts %}
-        <div>
-            <h2>{{ post.titulo }}</h2>
-            <p><em>{{ post.fecha_publicacion }}</em></p>
-            <p>{{ post.contenido|linebreaks }}</p>
-            <hr>
-        </div>
+    <div>
+        <h2><a href="{% url 'detalles_post' post.id %}">{{ post.titulo }}</a></h2>
+        <p><em>{{ post.fecha_publicacion }}</em></p>
+        <p>{{ post.contenido|linebreaks }}</p>
+        <hr>
+    </div>
     {% empty %}
-        <p>No hay publicaciones.</p>
+    <p>No hay publicaciones.</p>
     {% endfor %}
 </body>
+
 </html>

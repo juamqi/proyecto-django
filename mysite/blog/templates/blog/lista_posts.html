@@ -7,7 +7,14 @@
 
 <body>
     {% if user.is_authenticated %}
-    <p>Hola, {{ user.username }} | <a href="{% url 'logout' %}">Cerrar sesión</a></p>
+    <p>Hola, {{ user.username }} 
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">
+                Cerrar sesión
+            </button>
+        </form>
+    </p>
     {% else %}
     <p><a href="{% url 'login' %}">Iniciar sesión</a></p>
     {% endif %}
@@ -15,7 +22,7 @@
     <h1>Lista de Posts</h1>
     {% for post in posts %}
     <div>
-        <h2><a href="{% url 'detalles_post' post.id %}">{{ post.titulo }}</a></h2>
+        <h2><a href="{% url 'detalle_post' post.id %}">{{ post.titulo }}</a></h2>
         <p><em>{{ post.fecha_publicacion }}</em></p>
         <p>{{ post.contenido|linebreaks }}</p>
         <hr>

@@ -1,7 +1,0 @@
-<h2>¿Eliminar este post?</h2>
-<p>{{ post.titulo }}</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Sí, eliminar</button>
-</form>
-<a href="{% url 'detalle_post' post.id %}">Cancelar</a>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Rutina</title>
+</head>
+
+<body>
+    <div class="container">
+        {% if user.is_authenticated %}
+        <div class="user-info">
+            <p>Hola, {{ user.username }}!</p>
+            <p>Ya estás logueado en el sistema.</p>
+            <a href="{% url 'logout' %}" class="button secondary">Cerrar Sesión</a>
+            {% if user.is_staff %}
+            <a href="/admin/" class="button">Panel de Admin</a>
+            {% endif %}
+        </div>
+        {% else %}
+        <h1>Frase motivacional</h1>
+        <div>
+            <a href="{% url 'login' %}" class="button">Iniciar Sesión</a>
+            <a href="{% url 'registro' %}" class="button secondary">Registrarse</a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

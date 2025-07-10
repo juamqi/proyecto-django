@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Nuevo Post</title></head>
+<body>
+    <h2>Crear un nuevo post</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Publicar</button>
+    </form>
+    <p><a href="/">Volver</a></p>
+</body>
+</html>

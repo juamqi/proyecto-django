@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Categoria, Post
 from .forms import ComentarioForm, PostForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
@@ -15,7 +15,7 @@ def lista_posts(request):
     posts = Post.objects.all()
 
     if categoria:
-        posts = posts.filter(categoria=categoria)
+        posts = posts.filter(categoria__id=categoria)
 
     if anio:
         posts = posts.filter(fecha_publicacion__year=anio)
@@ -27,7 +27,10 @@ def lista_posts(request):
 
     posts = posts.order_by('-fecha_publicacion')
 
-    return render(request, 'blog/lista_posts.html', {'posts': posts})
+    return render(request, 'blog/lista_posts.html', {
+        'posts': posts,
+        'categorias': Categoria.objects.all()
+    })
 
 def detalle_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)

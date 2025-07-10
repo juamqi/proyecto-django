@@ -1,24 +1,47 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="es">
 
-{% block title %}App Rutina{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiRutina - Entrena con Propósito</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-{% block content %}
-<div class="container">
-    {% if user.is_authenticated %}
-    <div class="user-info">
-        <p>Hola, {{ user.username }}!</p>
-        <p>Ya estás logueado en el sistema.</p>
-        <a href="{% url 'logout' %}" class="button secondary">Cerrar Sesión</a>
-        {% if user.is_staff %}
-        <a href="/admin/" class="button">Panel de Admin</a>
-        {% endif %}
-    </div>
-    {% else %}
-    <h1>Frase motivacional</h1>
-    <div>
-        <a href="{% url 'login' %}" class="button">Iniciar Sesión</a>
-        <a href="{% url 'registro' %}" class="button secondary">Registrarse</a>
-    </div>
-    {% endif %}
-</div>
-{% endblock %}
+<body>
+    <!-- Hero -->
+    <div class="min-h-screen flex justify-center items-center">
+        <div class="text-center">
+
+            <div>
+                <h1>
+                    <span>Mi Rutina</span>
+                </h1>
+            </div>
+
+            <div>
+                <h2 class="text-4xl mb-6 leading-relaxed">
+                    El éxito no se logra con la suerte, se construye con constancia.
+                </h2>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex gap-6">
+                <a href="{% url 'login' %}">
+                    <span class="text-lg">Iniciar Sesión</span>
+                </a>
+                <a href="{% url 'registro' %}">
+                    <span class="text-lg">Crear Cuenta</span>
+                </a>
+            </div>
+
+            <footer class="py-6">
+                <div>
+                    <p>
+                        &copy; 2025.
+                    </p>
+                </div>
+            </footer>
+</body>
+
+</html>

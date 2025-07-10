@@ -4,8 +4,16 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
 
-@login_required
 def inicio(request):
+    """Vista principal: muestra frase motivacional o dashboard según el usuario"""
+    if request.user.is_authenticated:
+        return redirect('dashboard')
+    else:
+        return render(request, 'inicio.html')
+
+@login_required
+def dashboard(request):
+    """Dashboard para usuarios autenticados"""
     dia_actual = datetime.datetime.now().strftime('%A')  
     rutinas = []  
     ejercicios_de_hoy = []
@@ -14,7 +22,7 @@ def inicio(request):
         'rutinas': rutinas,
         'ejercicios_de_hoy': ejercicios_de_hoy,
     }
-    return render(request, 'inicio.html', context)
+    return render(request, 'dashboard.html', context)
 
 def registro(request):
     if request.method == 'POST':
@@ -22,7 +30,7 @@ def registro(request):
         if form.is_valid():
             usuario = form.save()
             login(request, usuario) 
-            return redirect('inicio')  
+            return redirect('dashboard')
     else:
         form = UserCreationForm()
 

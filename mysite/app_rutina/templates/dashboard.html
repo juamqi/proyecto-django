@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - MiRutina{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow-md p-6">
+    <!-- Header del Dashboard -->
+    <div class="border-b pb-4 mb-6">
+        <h1 class="text-3xl font-bold">
+            ¡Hola, {{ user.username }}!
+        </h1>
+        <p class="text-gray-600 mt-2">
+            Bienvenido a tu centro de entrenamiento personal.
+        </p>
+    </div>
+
+    <!-- Información del día -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="bg-blue-50 rounded-lg p-4">
+            <h3 class="font-semibold text-blue-800 mb-2">Hoy es</h3>
+            <p class="text-lg text-blue-700">{{ dia_actual }}</p>
+        </div>
+        
+        <div class="bg-green-50 rounded-lg p-4">
+            <h3 class="font-semibold text-green-800 mb-2">Rutinas Activas</h3>
+            <p class="text-lg text-green-700">{{ rutinas|length }}</p>
+        </div>
+        
+        <div class="bg-purple-50 rounded-lg p-4">
+            <h3 class="font-semibold text-purple-800 mb-2">Ejercicios Hoy</h3>
+            <p class="text-lg text-purple-700">{{ ejercicios_de_hoy|length }}</p>
+        </div>
+    </div>
+
+    <!-- Sección de Rutinas -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Mis Rutinas</h2>
+        {% if rutinas %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for rutina in rutinas %}
+                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <h3 class="font-semibold text-gray-800">{{ rutina.nombre }}</h3>
+                    <p class="text-gray-600 text-sm mt-2">{{ rutina.descripcion }}</p>
+                    <div class="mt-4 flex space-x-2">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
+                            Ver Rutina
+                        </button>
+                        <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-300">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-8 bg-gray-50 rounded-lg">
+                <p class="text-gray-600 mb-4">Aún no tienes rutinas creadas.</p>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                    Crear Mi Primera Rutina
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Ejercicios de Hoy -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Ejercicios de Hoy</h2>
+        {% if ejercicios_de_hoy %}
+            <div class="space-y-4">
+                {% for ejercicio in ejercicios_de_hoy %}
+                <div class="border border-gray-200 rounded-lg p-4">
+                    <h3 class="font-semibold text-gray-800">{{ ejercicio.nombre }}</h3>
+                    <p class="text-gray-600 text-sm">{{ ejercicio.descripcion }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-6 bg-gray-50 rounded-lg">
+                <p class="text-gray-600">No hay ejercicios programados para hoy.</p>
+                <p class="text-gray-500 text-sm mt-2">¡Perfecto día para descansar o crear una nueva rutina!</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Acciones Rápidas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button class="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700 transition-colors">
+            <div class="text-center">
+                <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <p class="font-semibold">Nueva Rutina</p>
+            </div>
+        </button>
+        
+        <button class="bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 transition-colors">
+            <div class="text-center">
+                <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+                <p class="font-semibold">Ver Progreso</p>
+            </div>
+        </button>
+        
+        <button class="bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 transition-colors">
+            <div class="text-center">
+                <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+                <p class="font-semibold">Ejercicios</p>
+            </div>
+        </button>
+        
+        <button class="bg-gray-600 text-white p-4 rounded-lg hover:bg-gray-700 transition-colors">
+            <div class="text-center">
+                <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <p class="font-semibold">Configuración</p>
+            </div>
+        </button>
+    </div>
+</div>
+{% endblock %}
